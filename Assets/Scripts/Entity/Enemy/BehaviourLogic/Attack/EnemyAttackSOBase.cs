@@ -2,23 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAttackSOBase : ScriptableObject
+public class EnemyAttackSOBase : EnemySOBase
 {
-    protected EnemyController enemy;
-    protected Transform transform;
-    protected GameObject gameObject;
-
-    protected Transform playerTransform;
-
-    public virtual void Initialize(GameObject gameObject, EnemyController enemy)
-    {
-        this.gameObject = gameObject;
-        transform = gameObject.transform;
-        this.enemy = enemy;
-
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-    }
-
     public virtual void DoEnterLogic() { }
     public virtual void DoExitLogic() { ResetValues(); }
     public virtual void DoFrameUpdateLogic() { }

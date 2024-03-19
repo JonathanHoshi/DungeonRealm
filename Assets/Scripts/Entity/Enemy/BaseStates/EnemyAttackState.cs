@@ -30,6 +30,20 @@ public class EnemyAttackState : EnemyState
     public override void FrameUpdate()
     {
         base.FrameUpdate();
+        
+        if (enemy.IsAggroEnabled)
+        {
+            if (!enemy.IsWithinChaseRange)
+            {
+                enemy.StateMachine.ChangeState(enemy.IdleState);
+            }
+            else if (!enemy.IsWithinAttackRange)
+            {
+                enemy.StateMachine.ChangeState(enemy.ChaseState);
+            }
+        }
+
+        Debug.Log("Handle Attack Logic");
 
         enemy.EnemyAttackBaseInstance.DoFrameUpdateLogic();
     }

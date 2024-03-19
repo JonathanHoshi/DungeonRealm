@@ -23,6 +23,10 @@ public class EnemyChasePlayer : EnemyChaseSOBase
     public override void DoFrameUpdateLogic()
     {
         base.DoFrameUpdateLogic();
+
+        Vector3 playerDirection = (playerTransform.position - enemy.transform.position).normalized;
+
+        enemy.MoveEntity(playerDirection, enemy.MovementSprintSpeed);
     }
 
     public override void DoPhysicsUpdateLogic()

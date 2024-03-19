@@ -7,7 +7,7 @@ public abstract class EntityController : MonoBehaviour, IDamagable, IEntityMovab
 {
 
     #region Damagable Variables
-
+    [field: Header("Damagable Variables")]
     [field: SerializeField] public float MaxHealth { get; set; } = 100f;
     [field: SerializeField] public float CurrentHealth { get; set; }
 
@@ -18,10 +18,15 @@ public abstract class EntityController : MonoBehaviour, IDamagable, IEntityMovab
 
     #endregion
 
+ 
     #region Movement Variables
     public Rigidbody RB { get; set; }
     public Animator Animator { get; set; }
+
+    [field: Header("Movement Variables")]
     [field: SerializeField] public float RotationSpeed { get; set; } = 1.0f;
+    [field: SerializeField] public float MovementWalkSpeed { get; set; } = 2.0f;
+    [field: SerializeField] public float MovementSprintSpeed { get; set; } = 5.0f;
 
     #endregion
 

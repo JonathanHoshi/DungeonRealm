@@ -6,7 +6,6 @@ using UnityEngine;
 public class EnemyIdleRandomWander : EnemyIdleSOBase
 {
     [SerializeField] private float randomMovementRange = 5f;
-    [SerializeField] private float movementSpeed = 1f;
 
     [SerializeField] private Vector3 _targetPos;
     private Vector3 _direction;
@@ -34,7 +33,7 @@ public class EnemyIdleRandomWander : EnemyIdleSOBase
 
         _direction = (_targetPos - enemy.transform.position).normalized;
 
-        enemy.MoveEntity(_direction, movementSpeed);
+        enemy.MoveEntity(_direction, enemy.MovementWalkSpeed);
 
         if ((_targetPos - enemy.transform.position).sqrMagnitude < 0.1f)
         {

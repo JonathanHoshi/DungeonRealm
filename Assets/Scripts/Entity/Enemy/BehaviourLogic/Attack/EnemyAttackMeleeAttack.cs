@@ -23,6 +23,11 @@ public class EnemyAttackMeleeAttack : EnemyAttackSOBase
     public override void DoFrameUpdateLogic()
     {
         base.DoFrameUpdateLogic();
+
+        Vector3 playerDirection = (playerTransform.position - enemy.transform.position).normalized;
+
+        enemy.MoveEntity(Vector3.zero, 0);
+        enemy.RotateEntity(playerDirection);
     }
 
     public override void DoPhysicsUpdateLogic()

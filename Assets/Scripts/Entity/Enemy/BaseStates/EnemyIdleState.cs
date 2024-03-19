@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class EnemyIdleState : EnemyState
 {
-    public EnemyIdleState(EnemyController enemy, BaseStateMachine entityStateMachine) : base(enemy, entityStateMachine)
-    {
-    }
+    public EnemyIdleState(EnemyController enemy, BaseStateMachine entityStateMachine) : base(enemy, entityStateMachine) { }
 
     public override void AnimationTriggerEvent(EntityController.AnimationTriggerType triggerType)
     {
@@ -32,6 +30,18 @@ public class EnemyIdleState : EnemyState
     public override void FrameUpdate()
     {
         base.FrameUpdate();
+        
+        if (enemy.IsAggroEnabled)
+        {
+            if (enemy.IsWithinAttackRange)
+            {
+                enemy.StateMachine.ChangeState(enemy.AttackState);
+            }
+            else if (enemy.IsWithinChaseRange)
+            {
+                enemy.StateMachine.ChangeState(enemy.ChaseState);
+            }
+        }
 
         enemy.EnemyIdleBaseInstance.DoFrameUpdateLogic();
     }
