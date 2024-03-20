@@ -5,5 +5,4 @@ using UnityEngine;
 public class EntityStateMachine : BaseStateMachine
 {
     public EntityState CurrentEntityState { get { return (EntityState)CurrentState; } set { CurrentState = value; } }
-
 }

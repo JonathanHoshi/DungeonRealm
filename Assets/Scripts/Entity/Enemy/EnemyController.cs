@@ -98,4 +98,10 @@ public abstract class EnemyController : EntityController
             aggroCoroutine = null;
         }
     }
+
+    public override void MoveEntity(Vector3 directon, float speed)
+    {
+        base.MoveEntity(directon, speed);
+        RotateEntity(directon);
+    }
 }

@@ -4,54 +4,54 @@ using UnityEngine;
 
 public class EnemyAttackState : EnemyState
 {
-    public EnemyAttackState(EnemyController enemy, BaseStateMachine entityStateMachine) : base(enemy, entityStateMachine) { }
+    public EnemyAttackState(EnemyController enemy, EntityStateMachine entityStateMachine) : base(enemy, entityStateMachine) { }
 
     public override void AnimationTriggerEvent(EntityController.AnimationTriggerType triggerType)
     {
         base.AnimationTriggerEvent(triggerType);
 
-        enemy.EnemyAttackBaseInstance.DoAnimationTriggerEventLogic(triggerType);
+        Enemy.EnemyAttackBaseInstance.DoAnimationTriggerEventLogic(triggerType);
     }
 
     public override void EnterState()
     {
         base.EnterState();
 
-        enemy.EnemyAttackBaseInstance.DoEnterLogic();
+        Enemy.EnemyAttackBaseInstance.DoEnterLogic();
     }
 
     public override void ExitState()
     {
         base.ExitState();
 
-        enemy.EnemyAttackBaseInstance.DoExitLogic();
+        Enemy.EnemyAttackBaseInstance.DoExitLogic();
     }
 
     public override void FrameUpdate()
     {
         base.FrameUpdate();
         
-        if (enemy.IsAggroEnabled)
+        if (Enemy.IsAggroEnabled)
         {
-            if (!enemy.IsWithinChaseRange)
+            if (!Enemy.IsWithinChaseRange)
             {
-                enemy.StateMachine.ChangeState(enemy.IdleState);
+                Enemy.StateMachine.ChangeState(Enemy.IdleState);
             }
-            else if (!enemy.IsWithinAttackRange)
+            else if (!Enemy.IsWithinAttackRange)
             {
-                enemy.StateMachine.ChangeState(enemy.ChaseState);
+                Enemy.StateMachine.ChangeState(Enemy.ChaseState);
             }
         }
 
         Debug.Log("Handle Attack Logic");
 
-        enemy.EnemyAttackBaseInstance.DoFrameUpdateLogic();
+        Enemy.EnemyAttackBaseInstance.DoFrameUpdateLogic();
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
 
-        enemy.EnemyAttackBaseInstance.DoPhysicsUpdateLogic();
+        Enemy.EnemyAttackBaseInstance.DoPhysicsUpdateLogic();
     }
 }

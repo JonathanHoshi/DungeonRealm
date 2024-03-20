@@ -4,52 +4,52 @@ using UnityEngine;
 
 public class EnemyIdleState : EnemyState
 {
-    public EnemyIdleState(EnemyController enemy, BaseStateMachine entityStateMachine) : base(enemy, entityStateMachine) { }
+    public EnemyIdleState(EnemyController enemy, EntityStateMachine entityStateMachine) : base(enemy, entityStateMachine) { }
 
     public override void AnimationTriggerEvent(EntityController.AnimationTriggerType triggerType)
     {
         base.AnimationTriggerEvent(triggerType);
 
-        enemy.EnemyIdleBaseInstance.DoAnimationTriggerEventLogic(triggerType);
+        Enemy.EnemyIdleBaseInstance.DoAnimationTriggerEventLogic(triggerType);
     }
 
     public override void EnterState()
     {
         base.EnterState();
 
-        enemy.EnemyIdleBaseInstance.DoEnterLogic();
+        Enemy.EnemyIdleBaseInstance.DoEnterLogic();
     }
 
     public override void ExitState()
     {
         base.ExitState();
 
-        enemy.EnemyIdleBaseInstance.DoExitLogic();
+        Enemy.EnemyIdleBaseInstance.DoExitLogic();
     }
 
     public override void FrameUpdate()
     {
         base.FrameUpdate();
         
-        if (enemy.IsAggroEnabled)
+        if (Enemy.IsAggroEnabled)
         {
-            if (enemy.IsWithinAttackRange)
+            if (Enemy.IsWithinAttackRange)
             {
-                enemy.StateMachine.ChangeState(enemy.AttackState);
+                Enemy.StateMachine.ChangeState(Enemy.AttackState);
             }
-            else if (enemy.IsWithinChaseRange)
+            else if (Enemy.IsWithinChaseRange)
             {
-                enemy.StateMachine.ChangeState(enemy.ChaseState);
+                Enemy.StateMachine.ChangeState(Enemy.ChaseState);
             }
         }
 
-        enemy.EnemyIdleBaseInstance.DoFrameUpdateLogic();
+        Enemy.EnemyIdleBaseInstance.DoFrameUpdateLogic();
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
 
-        enemy.EnemyIdleBaseInstance.DoPhysicsUpdateLogic();
+        Enemy.EnemyIdleBaseInstance.DoPhysicsUpdateLogic();
     }
 }

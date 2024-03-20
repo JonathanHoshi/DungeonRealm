@@ -7,7 +7,7 @@ public abstract class EntityState : BaseState
     protected EntityController entity;
     protected EntityStateMachine entityStateMachine;
 
-    public EntityState(EntityController entity, BaseStateMachine baseStateMachine) : base (baseStateMachine)
+    public EntityState(EntityController entity, EntityStateMachine entityStateMachine) : base (entityStateMachine)
     {
         this.entity = entity;
     }

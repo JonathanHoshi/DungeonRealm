@@ -45,12 +45,18 @@ public abstract class EntityController : MonoBehaviour, IDamagable, IEntityMovab
 
     protected virtual void Update()
     {
-        StateMachine.CurrentEntityState.FrameUpdate();
+        if (StateMachine.IsInitialized())
+        {
+            StateMachine.CurrentEntityState.FrameUpdate();
+        }
     }
 
     protected virtual void FixedUpdate()
     {
-        StateMachine.CurrentEntityState.PhysicsUpdate();
+        if (StateMachine.IsInitialized())
+        {
+            StateMachine.CurrentEntityState.PhysicsUpdate();
+        }
     }
 
     #region Entity Health / Death Functions
@@ -74,11 +80,9 @@ public abstract class EntityController : MonoBehaviour, IDamagable, IEntityMovab
 
     #region Entity Movement Functions
 
-    public void MoveEntity(Vector3 directon, float speed)
+    public virtual void MoveEntity(Vector3 directon, float speed)
     {
         RB.velocity = directon * speed;
-
-        RotateEntity(directon);
     }
 
     public void RotateEntity(Vector3 direction)

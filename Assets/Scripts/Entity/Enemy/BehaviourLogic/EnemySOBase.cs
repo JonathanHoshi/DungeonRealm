@@ -16,6 +16,8 @@ public abstract class EnemySOBase : ScriptableObject
         transform = gameObject.transform;
         this.enemy = enemy;
 
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        playerTransform = (GameManager.instance != null && GameManager.instance.PlayerRef != null) 
+            ? GameManager.instance.PlayerRef.transform
+            : GameObject.FindGameObjectWithTag("Player").transform;
     }
 }

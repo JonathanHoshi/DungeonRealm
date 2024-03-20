@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Aggro-Base Aggro", menuName = "EnemyLogic/Aggro Logic/Base Aggro")]
@@ -29,7 +30,9 @@ public class EnemyAggroSOBase : EnemySOBase
         InitializeAggroCoroutune();
     }
     public virtual void DoExitLogic() { ResetValues(); }
-    public virtual void DoFrameUpdateLogic() { }
+    public virtual void DoFrameUpdateLogic() 
+    {
+    }
     public virtual void DoPhysicsUpdateLogic() { }
     public virtual void ResetValues() 
     {
@@ -75,7 +78,7 @@ public class EnemyAggroSOBase : EnemySOBase
     }
     private bool CheckNoObstaclesBetween(Vector3 origin, Vector3 target)
     {
-        return !Physics.Raycast(origin, target - origin, aggroObstacleMask);
+        return !Physics.Raycast(origin, target - origin, Vector3.Distance(origin, target), aggroObstacleMask);
     }
 
     private void InitializeAggroCoroutune()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyState : EntityState
 {
-    protected EnemyController enemy { get { return (EnemyController)entity; } }
+    protected EnemyController Enemy { get { return (EnemyController)entity; } }
 
-    public EnemyState(EnemyController entity, BaseStateMachine entityStateMachine) : base(entity, entityStateMachine) { }
+    public EnemyState(EnemyController enemy, EntityStateMachine entityStateMachine) : base(enemy, entityStateMachine) { }
 }

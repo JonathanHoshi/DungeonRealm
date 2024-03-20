@@ -1,5 +1,5 @@
 {
-    "name": "Controls",
+    "name": "PlayerControls",
     "maps": [
         {
             "name": "Player",
@@ -17,7 +17,7 @@
             ],
             "bindings": [
                 {
-                    "name": "WASD",
+                    "name": "Keyboard (WASD)",
                     "id": "c7b5e873-cfae-4540-96a0-5412297c5802",
                     "path": "2DVector",
                     "interactions": "",
@@ -41,7 +41,7 @@
                 {
                     "name": "Down",
                     "id": "69a9d31c-59fb-4242-aa81-87c45c2f71e0",
-                    "path": "<Keyboard>/a",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -52,7 +52,7 @@
                 {
                     "name": "Left",
                     "id": "da0e8b5d-b67e-4dda-a212-bd5537108a90",
-                    "path": "<Keyboard>/s",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

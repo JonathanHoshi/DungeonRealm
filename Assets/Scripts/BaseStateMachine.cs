@@ -18,4 +18,9 @@ public abstract class BaseStateMachine
         CurrentState = newState;
         CurrentState.EnterState();
     }
+
+    public bool IsInitialized()
+    {
+        return CurrentState != null;
+    }
 }

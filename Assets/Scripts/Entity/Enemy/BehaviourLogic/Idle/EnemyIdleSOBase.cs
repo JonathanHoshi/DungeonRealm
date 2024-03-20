@@ -6,10 +6,7 @@ public class EnemyIdleSOBase : EnemySOBase
 {
     public virtual void DoEnterLogic() { }
     public virtual void DoExitLogic() { ResetValues(); }
-    public virtual void DoFrameUpdateLogic() 
-    {
-        // Do Enemy Idle Base Logic
-    }
+    public virtual void DoFrameUpdateLogic() { }
     public virtual void DoPhysicsUpdateLogic() { }
     public virtual void DoAnimationTriggerEventLogic(EnemyController.AnimationTriggerType triggerType) { }
     public virtual void ResetValues() { }
