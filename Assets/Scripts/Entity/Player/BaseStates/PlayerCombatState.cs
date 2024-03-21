@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerCombatState : PlayerState
 {
+
     public PlayerCombatState(PlayerController player, EntityStateMachine entityStateMachine) : base(player, entityStateMachine)
     {
     }
@@ -28,6 +29,7 @@ public class PlayerCombatState : PlayerState
         base.FrameUpdate();
 
         Player.MoveEntity(InputManager.instance.Movement, Player.MovementSprintSpeed);
+        Player.RotateEntity(InputManager.instance.LookDirection);
     }
 
     public override void PhysicsUpdate()

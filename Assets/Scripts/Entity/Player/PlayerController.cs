@@ -7,6 +7,8 @@ public class PlayerController : EntityController
 {
     public PlayerCombatState CombatState { get; set; }
 
+    [SerializeField] private LayerMask groundMask;
+
     protected override void Awake()
     {
         base.Awake();
@@ -29,5 +31,4 @@ public class PlayerController : EntityController
     {
         base.FixedUpdate();
     }
-
 }

@@ -25,7 +25,10 @@ public class GameManager : MonoBehaviour
 
     public void InitializeManager()
     {
-
+        if (PlayerRef == null)
+        {
+            PlayerRef = GameObject.FindGameObjectWithTag("Player");
+        }
     }
 
     private void Update()
