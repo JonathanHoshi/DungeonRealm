@@ -29,7 +29,7 @@ public class PlayerCombatState : PlayerState
         base.FrameUpdate();
 
         Player.MoveEntity(InputManager.instance.Movement, Player.MovementSprintSpeed);
-        Player.RotateEntity(InputManager.instance.LookDirection);
+        Player.RotateEntity(InputManager.instance.LookDirection, Player.RotationSpeed);
     }
 
     public override void PhysicsUpdate()

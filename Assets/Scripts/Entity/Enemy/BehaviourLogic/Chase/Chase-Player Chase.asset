@@ -12,3 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b695ce7499fd9b4f9dc670f3382ffd8, type: 3}
   m_Name: Chase-Player Chase
   m_EditorClassIdentifier: 
+  aiAvoidLayer:
+    serializedVersion: 2
+    m_Bits: 320
+  force: 20
+  minimumDistToAvoid: 2

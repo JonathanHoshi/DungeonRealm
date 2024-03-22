@@ -31,9 +31,7 @@ public class EnemyIdleRandomWander : EnemyIdleSOBase
     {
         base.DoFrameUpdateLogic();
 
-        _direction = (_targetPos - enemy.transform.position).normalized;
-
-        enemy.MoveEntity(_direction, enemy.MovementWalkSpeed);
+        enemy.MoveToTarget(_targetPos, enemy.MovementWalkSpeed);
 
         if ((_targetPos - enemy.transform.position).sqrMagnitude < 0.1f)
         {

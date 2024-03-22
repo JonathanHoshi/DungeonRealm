@@ -34,6 +34,12 @@ public abstract class EnemyController : EntityController
 
     private Coroutine aggroCoroutine = null;
 
+
+    [field: Header("AI Avoidance Variables")]
+    [SerializeField] private LayerMask aiAvoidLayer;
+    [SerializeField] private float force = 20.0f;
+    [SerializeField] private float minimumDistToAvoid = 2f;
+
     protected override void Awake()
     {
         EnemyIdleBaseInstance = Instantiate(EnemyIdleBase);
@@ -99,9 +105,40 @@ public abstract class EnemyController : EntityController
         }
     }
 
-    public override void MoveEntity(Vector3 directon, float speed)
+    public void MoveToTarget(Vector3 targetPosition, float speed)
     {
-        base.MoveEntity(directon, speed);
-        RotateEntity(directon);
+        MoveEntity(transform.forward, speed);
+        Vector3 calculatedDirection = AvoidObstacles(targetPosition, aiAvoidLayer).normalized;
+        RotateEntity(calculatedDirection, RotationSpeed);
+    }
+
+    private Vector3 AvoidObstacles(Vector3 targetPosition, LayerMask layer)
+    {
+        RaycastHit Hit;
+        //Check that the vehicle hit with the obstacles within it's minimum distance to avoid
+        Vector3 right45 = (transform.forward + transform.right).normalized;
+        Vector3 left45 = (transform.forward - transform.right).normalized;
+        Vector3 startPos = transform.position + transform.up * 1;
+        if (Physics.Raycast(startPos, right45, out Hit, minimumDistToAvoid, layer))
+        {
+            //Get the new directional vector by adding force to vehicle's current forward vector
+            return transform.forward - transform.right * force;
+        }
+        else if (Physics.Raycast(startPos, left45, out Hit, minimumDistToAvoid, layer))
+        {
+            //Get the new directional vector by adding force to vehicle's current forward vector
+            return transform.forward + transform.right * force;
+        }
+        else if (Physics.Raycast(startPos, transform.forward, out Hit, minimumDistToAvoid, layer))
+        {
+            //Get the normal of the hit point to calculate the new direction
+            Vector3 hitNormal = Hit.normal;
+            hitNormal.y = 0.0f; //Don't want to move in Y-Space
+            return transform.forward + hitNormal * force;
+        }
+        else
+        {
+            return targetPosition - transform.position;
+        }
     }
 }

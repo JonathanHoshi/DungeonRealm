@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Chase-Player Chase", menuName = "EnemyLogic/Chase Logic/Player Chase")]
 public class EnemyChasePlayer : EnemyChaseSOBase
 {
+
     public override void DoAnimationTriggerEventLogic(EntityController.AnimationTriggerType triggerType)
     {
         base.DoAnimationTriggerEventLogic(triggerType);
@@ -24,9 +25,7 @@ public class EnemyChasePlayer : EnemyChaseSOBase
     {
         base.DoFrameUpdateLogic();
 
-        Vector3 playerDirection = (playerTransform.position - enemy.transform.position).normalized;
-
-        enemy.MoveEntity(playerDirection, enemy.MovementSprintSpeed);
+        enemy.MoveToTarget(playerTransform.position, enemy.MovementSprintSpeed);
     }
 
     public override void DoPhysicsUpdateLogic()
@@ -43,4 +42,7 @@ public class EnemyChasePlayer : EnemyChaseSOBase
     {
         base.ResetValues();
     }
+
+
+
 }

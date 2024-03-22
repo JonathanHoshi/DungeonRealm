@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -85,9 +86,9 @@ public abstract class EntityController : MonoBehaviour, IDamagable, IEntityMovab
         RB.velocity = directon * speed;
     }
 
-    public void RotateEntity(Vector3 direction)
+    public virtual void RotateEntity(Vector3 direction, float speed)
     {
-        float singleStep = RotationSpeed * Time.deltaTime;
+        float singleStep = speed * Time.deltaTime;
 
         // Rotate the forward vector towards the target direction by one step
         Vector3 newDirection = Vector3.RotateTowards(transform.forward, direction, singleStep, 0.0f);
@@ -98,6 +99,16 @@ public abstract class EntityController : MonoBehaviour, IDamagable, IEntityMovab
         // Calculate a rotation a step closer to the target and applies rotation to this object
         transform.rotation = Quaternion.LookRotation(newDirection);
     }
+
+    //public void RotateEntity(Vector3 direction)
+    //{
+    //    Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+    //    targetRotation.x = transform.rotation.x;
+    //    targetRotation.z = transform.rotation.z;
+
+    //    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * RotationSpeed);
+    //}
 
     #endregion
 

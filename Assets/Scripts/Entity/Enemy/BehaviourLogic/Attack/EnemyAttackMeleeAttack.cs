@@ -27,7 +27,7 @@ public class EnemyAttackMeleeAttack : EnemyAttackSOBase
         Vector3 playerDirection = (playerTransform.position - enemy.transform.position).normalized;
 
         enemy.MoveEntity(Vector3.zero, 0);
-        enemy.RotateEntity(playerDirection);
+        enemy.RotateEntity(playerDirection, enemy.RotationSpeed);
     }
 
     public override void DoPhysicsUpdateLogic()

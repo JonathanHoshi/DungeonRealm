@@ -20,5 +20,5 @@ MonoBehaviour:
   aggroObstacleMask:
     serializedVersion: 2
     m_Bits: 64
-  aggroChecksIgnoreObstacles: 0
+  aggroChecksIgnoreObstacles: 1
   aggroChecksIgnoreEnabled: 0

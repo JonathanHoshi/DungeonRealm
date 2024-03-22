@@ -43,8 +43,6 @@ public class EnemyAttackState : EnemyState
             }
         }
 
-        Debug.Log("Handle Attack Logic");
-
         Enemy.EnemyAttackBaseInstance.DoFrameUpdateLogic();
     }
 

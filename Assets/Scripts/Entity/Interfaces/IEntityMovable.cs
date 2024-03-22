@@ -12,5 +12,5 @@ public interface IEntityMovable
 
     void MoveEntity(Vector3 velocity, float speed);
 
-    void RotateEntity(Vector3 direction);
+    void RotateEntity(Vector3 direction, float speed);
 }
