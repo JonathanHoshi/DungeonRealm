@@ -2,51 +2,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyIdleState : EnemyState
+public class EnemyCombatState : EnemyState
 {
-    public EnemyIdleState(EnemyController enemy, EntityStateMachine entityStateMachine) 
+    public EnemyCombatState(EnemyController enemy, EntityStateMachine entityStateMachine) 
         : base(enemy, entityStateMachine) { }
 
     public override void AnimationTriggerEvent(EntityController.AnimationTriggerType triggerType)
     {
         base.AnimationTriggerEvent(triggerType);
 
-        Enemy.EnemyIdleBaseInstance.DoAnimationTriggerEventLogic(triggerType);
+        Enemy.EnemyCombatBaseInstance.DoAnimationTriggerEventLogic(triggerType);
     }
 
     public override void EnterState()
     {
         base.EnterState();
 
-        Enemy.EnemyIdleBaseInstance.DoEnterLogic();
+        Enemy.EnemyCombatBaseInstance.DoEnterLogic();
     }
 
     public override void ExitState()
     {
         base.ExitState();
 
-        Enemy.EnemyIdleBaseInstance.DoExitLogic();
+        Enemy.EnemyCombatBaseInstance.DoExitLogic();
     }
 
     public override void FrameUpdate()
     {
         base.FrameUpdate();
-        
-        if (Enemy.IsAggroEnabled)
+
+        if (!Enemy.IsPlayerAggro)
         {
-            if (Enemy.IsPlayerAggro)
-            {
-                Enemy.StateMachine.ChangeState(Enemy.CombatState);
-            }
+            Enemy.StateMachine.ChangeState(Enemy.IdleState);
         }
 
-        Enemy.EnemyIdleBaseInstance.DoFrameUpdateLogic();
+        Enemy.EnemyCombatBaseInstance.DoFrameUpdateLogic();
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
 
-        Enemy.EnemyIdleBaseInstance.DoPhysicsUpdateLogic();
+        Enemy.EnemyCombatBaseInstance.DoPhysicsUpdateLogic();
     }
 }

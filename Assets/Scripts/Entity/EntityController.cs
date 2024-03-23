@@ -6,7 +6,6 @@ using UnityEngine;
 
 public abstract class EntityController : MonoBehaviour, IDamagable, IEntityMovable
 {
-
     #region Damagable Variables
     [field: Header("Damagable Variables")]
     [field: SerializeField] public float MaxHealth { get; set; } = 100f;
@@ -120,7 +119,7 @@ public abstract class EntityController : MonoBehaviour, IDamagable, IEntityMovab
         PlayFootstepSound,
     }
 
-    private void AnimationTriggerEvent(AnimationTriggerType triggerType)
+    protected void AnimationTriggerEvent(AnimationTriggerType triggerType)
     {
         StateMachine.CurrentEntityState.AnimationTriggerEvent(triggerType);
     }

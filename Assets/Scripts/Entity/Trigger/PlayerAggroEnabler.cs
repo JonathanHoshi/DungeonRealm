@@ -4,26 +4,19 @@ using UnityEngine;
 
 public class PlayerAggroEnabler : MonoBehaviour
 {
-    private void Awake()
-    {
-
-    }
-
     private void OnTriggerEnter(Collider collision)
     {
-        EnemyController enemy = collision.GetComponent<EnemyController>();
-        if (enemy != null)
+        if (collision.TryGetComponent<EnemyController>(out EnemyController enemy))
         {
-            enemy.IsAggroEnabled = true;
+            enemy.SetAggroStatus(true);
         }
     }
 
     private void OnTriggerExit(Collider collision)
     {
-        EnemyController enemy = collision.GetComponent<EnemyController>();
-        if (enemy != null)
+        if (collision.TryGetComponent<EnemyController>(out EnemyController enemy))
         {
-            enemy.IsAggroEnabled = false;
+            enemy.SetAggroStatus(false);
         }
     }
 }

@@ -2,46 +2,44 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Aggro-Base Aggro", menuName = "EnemyLogic/Aggro Logic/Base Aggro")]
 public class EnemyAggroSOBase : EnemySOBase
 {
-    [SerializeField] private float chaseAggroRange = 10f;
-    [SerializeField] private float attackAggroRange = 2f;
+    [Header("Override Variables")]
+    [SerializeField] private bool ignoreAggroChecks = false;
 
+    [Header("Aggro Variables")]
+    [SerializeField] protected float combatAggroRadius = 10f;
+
+    [Header("Aggro Check Variables")]
     [SerializeField] private int idleAggroChecksPerSecond = 2;
-    [SerializeField] private int chaseAggroChecksPerSecond = 4;
-    [SerializeField] private int attackAggroChecksPerSecond = 8;
+    [SerializeField] private int combatAggroChecksPerSecond = 4;
 
-    [SerializeField] private LayerMask aggroObstacleMask;
-    [SerializeField] private bool aggroChecksIgnoreObstacles = false;
-    [SerializeField] private bool aggroChecksIgnoreEnabled = false;
 
     private float currentAggroTimer;
 
     public override void Initialize(GameObject gameObject, EnemyController enemy)
     {
         base.Initialize(gameObject, enemy);
-
-        InitializeAggroCoroutune();
     }
 
-    public virtual void DoEnterLogic() 
+    public virtual void DoStartLogic() 
     {
-        InitializeAggroCoroutune();
+        if (!ignoreAggroChecks) {
+            InitializeAggroCoroutine();
+        }
     }
-    public virtual void DoExitLogic() { ResetValues(); }
-    public virtual void DoFrameUpdateLogic() 
-    {
-    }
+
+    public virtual void DoStopLogic() { ResetValues(); }
+    public virtual void DoFrameUpdateLogic() { }
     public virtual void DoPhysicsUpdateLogic() { }
     public virtual void ResetValues() 
     {
-        enemy.StopAggroCoroutune();
+        Enemy.StopAggroCoroutune();
     }
 
-    protected virtual IEnumerator AggroHandler()
+    private IEnumerator AggroHandler()
     {
-        while(true)
+        while (true)
         {
             HandleAggroLogic();
 
@@ -50,49 +48,29 @@ public class EnemyAggroSOBase : EnemySOBase
         }
     }
 
-    protected virtual void HandleAggroLogic() 
+    private void HandleAggroLogic()
     {
-        if (!enemy.IsAggroEnabled && !aggroChecksIgnoreEnabled)
+        if (Enemy.IsAggroEnabled)
         {
-            return;
+            Enemy.IsPlayerAggro = CheckPlayerAggroStatus();
         }
-
-        enemy.IsWithinChaseRange = CheckIsWithinChaseDistance(chaseAggroRange);
-        enemy.IsWithinAttackRange = CheckIsWithinAttackDistance(attackAggroRange);
     }
 
-    private bool CheckIsWithinChaseDistance(float distance)
+    protected virtual bool CheckPlayerAggroStatus()
     {
-        return (IsWithinSqrDistance(enemy.transform.position, playerTransform.position, distance)
-        && (aggroChecksIgnoreObstacles || CheckNoObstaclesBetween(enemy.transform.position, playerTransform.position)));
+        return AILogic.IsWithinSqrDistance(Enemy.transform.position, PlayerTransform.position, combatAggroRadius);
     }
 
-    private bool CheckIsWithinAttackDistance(float distance)
-    {
-        return IsWithinSqrDistance(enemy.transform.position, playerTransform.position, distance);
-    }
-
-    private bool IsWithinSqrDistance(Vector3 a, Vector3 b, float distance)
-    {
-        return Vector3.SqrMagnitude(a - b) <= distance * distance;
-    }
-    private bool CheckNoObstaclesBetween(Vector3 origin, Vector3 target)
-    {
-        return !Physics.Raycast(origin, target - origin, Vector3.Distance(origin, target), aggroObstacleMask);
-    }
-
-    private void InitializeAggroCoroutune()
+    private void InitializeAggroCoroutine()
     {
         UpdateCurrentAggroTimer();
 
-        enemy.StartAggroCoroutine(AggroHandler());
+        Enemy.StartAggroCoroutine(AggroHandler());
     }
     private void UpdateCurrentAggroTimer()
     {
-        currentAggroTimer = (enemy.IsIdleState())
+        currentAggroTimer = (Enemy.IsIdleState())
             ? 1.0f / idleAggroChecksPerSecond
-            : (enemy.IsChaseState())
-                ? 1.0f / chaseAggroChecksPerSecond
-                : 1.0f / attackAggroChecksPerSecond;
+            : 1.0f / combatAggroChecksPerSecond;
     }
 }

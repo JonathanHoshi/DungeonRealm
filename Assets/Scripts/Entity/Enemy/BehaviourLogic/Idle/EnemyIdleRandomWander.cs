@@ -8,7 +8,6 @@ public class EnemyIdleRandomWander : EnemyIdleSOBase
     [SerializeField] private float randomMovementRange = 5f;
 
     [SerializeField] private Vector3 _targetPos;
-    private Vector3 _direction;
 
     public override void DoAnimationTriggerEventLogic(EntityController.AnimationTriggerType triggerType)
     {
@@ -31,9 +30,9 @@ public class EnemyIdleRandomWander : EnemyIdleSOBase
     {
         base.DoFrameUpdateLogic();
 
-        enemy.MoveToTarget(_targetPos, enemy.MovementWalkSpeed);
+        Enemy.MoveToTarget(_targetPos, Enemy.MovementWalkSpeed);
 
-        if ((_targetPos - enemy.transform.position).sqrMagnitude < 0.1f)
+        if ((_targetPos - Enemy.transform.position).sqrMagnitude < 0.1f)
         {
             _targetPos = GetRandomPointInCircle();
         }
@@ -58,6 +57,6 @@ public class EnemyIdleRandomWander : EnemyIdleSOBase
     {
         Vector2 newDirection = UnityEngine.Random.insideUnitCircle;
 
-        return enemy.transform.position + new Vector3(newDirection.x, 0f, newDirection.y) * randomMovementRange;
+        return Enemy.transform.position + new Vector3(newDirection.x, 0f, newDirection.y) * randomMovementRange;
     }
 }

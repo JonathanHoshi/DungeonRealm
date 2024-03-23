@@ -338,7 +338,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.35355338, y: 0.35355338, z: -0.1464466, w: 0.8535535}
-  m_LocalPosition: {x: -12, y: 18, z: -12}
+  m_LocalPosition: {x: -13.5, y: 20, z: -13.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2413,12 +2413,10 @@ MonoBehaviour:
   <MovementWalkSpeed>k__BackingField: 2
   <MovementSprintSpeed>k__BackingField: 4
   EnemyIdleBase: {fileID: 11400000, guid: d622c815803651748943f8f94b06615f, type: 2}
-  EnemyChaseBase: {fileID: 11400000, guid: 6ce5fda98244f664eaa393d851f1c4c7, type: 2}
-  EnemyAttackBase: {fileID: 11400000, guid: a63e97feddd833a47b97413a3465cfe7, type: 2}
-  EnemyAggroBase: {fileID: 11400000, guid: f74482447bc5de342be1602950f5d88b, type: 2}
+  EnemyCombatBase: {fileID: 11400000, guid: 8dfef77ee7265e942b10a14aefee9f2e, type: 2}
+  EnemyAggroBase: {fileID: 11400000, guid: 56ee53236c745bf4da402f4977d08deb, type: 2}
   <IsAggroEnabled>k__BackingField: 0
-  <IsWithinChaseRange>k__BackingField: 0
-  <IsWithinAttackRange>k__BackingField: 0
+  <IsPlayerAggro>k__BackingField: 0
   aiAvoidLayer:
     serializedVersion: 2
     m_Bits: 64

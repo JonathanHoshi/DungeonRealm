@@ -4,19 +4,19 @@ using UnityEngine;
 
 public abstract class EnemySOBase : ScriptableObject
 {
-    protected EnemyController enemy;
-    protected Transform transform;
-    protected GameObject gameObject;
+    protected EnemyController Enemy { get; private set; }
+    protected Transform Transform { get; private set; }
+    protected GameObject GameObject { get; private set; }
 
-    protected Transform playerTransform;
+    protected Transform PlayerTransform { get; private set; }
 
     public virtual void Initialize(GameObject gameObject, EnemyController enemy)
     {
-        this.gameObject = gameObject;
-        transform = gameObject.transform;
-        this.enemy = enemy;
+        this.GameObject = gameObject;
+        Transform = gameObject.transform;
+        this.Enemy = enemy;
 
-        playerTransform = (GameManager.instance != null && GameManager.instance.PlayerRef != null) 
+        PlayerTransform = (GameManager.instance != null && GameManager.instance.PlayerRef != null) 
             ? GameManager.instance.PlayerRef.transform
             : GameObject.FindGameObjectWithTag("Player").transform;
     }
