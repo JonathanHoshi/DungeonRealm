@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public abstract class EnemyController : EntityController
 {
@@ -22,6 +23,8 @@ public abstract class EnemyController : EntityController
 
     #endregion
 
+    #region Aggro Variables
+
     [Header("Aggro Variables")]
     [SerializeField] private EnemyAggroSOBase EnemyAggroBase;
 
@@ -31,11 +34,18 @@ public abstract class EnemyController : EntityController
 
     private Coroutine aggroCoroutine = null;
 
+    #endregion
+
+    #region AI Avoidance Variables
 
     [field: Header("AI Avoidance Variables")]
     [SerializeField] private LayerMask aiAvoidLayer;
     [SerializeField] private float force = 20.0f;
     [SerializeField] private float minimumDistToAvoid = 2f;
+
+    #endregion
+
+    public AISkillMovementPreference AIMovementPreference { get; set; } = AISkillMovementPreference.Idle;
 
     protected override void Awake()
     {
@@ -63,6 +73,7 @@ public abstract class EnemyController : EntityController
     protected override void Update()
     {
         base.Update();
+        Animator.SetFloat("MoveSpeed", Vector3.Magnitude(RB.velocity));
 
         EnemyAggroBaseInstance.DoFrameUpdateLogic();
     }
@@ -87,6 +98,7 @@ public abstract class EnemyController : EntityController
     public void MoveToTarget(Vector3 targetPosition, float speed)
     {
         MoveEntity(transform.forward, speed);
+
         Vector3 calculatedDirection = AvoidObstacles(targetPosition, aiAvoidLayer).normalized;
         RotateEntity(calculatedDirection, RotationSpeed);
     }
@@ -120,6 +132,7 @@ public abstract class EnemyController : EntityController
         }
     }
 
+    #region Aggro Functions
 
     public void SetAggroStatus(bool status)
     {
@@ -152,5 +165,50 @@ public abstract class EnemyController : EntityController
         }
     }
 
+    #endregion
 
+
+    public void HandleSkillSelectionUpdateLogic(Transform target)
+    {
+        if (CurrentSkillIndex == -1)
+        {
+            int skillReadyIndex = -1;
+            int skillMovementPreferenceIndex = -1;
+
+            for (int i = 0; i < SkillListInstance.Length; i++)
+            {
+                if (SkillListInstance[i].IsSkillReady()) {
+                    if (SkillListInstance[i].WithinRange(transform, target))
+                    {
+                        skillReadyIndex = i;
+                        break;
+                    }
+
+                    // Select highest cooldown skill with a movement preference for movement logic
+                    if (SkillListInstance[i].GetMovementPreference() != AISkillMovementPreference.Idle 
+                        && (skillMovementPreferenceIndex == -1 || SkillListInstance[i].cooldown > SkillListInstance[skillMovementPreferenceIndex].cooldown))
+                    {
+                        skillMovementPreferenceIndex = i;
+                    }
+                }
+            }
+
+            if (skillMovementPreferenceIndex != -1)
+            {
+                AIMovementPreference = SkillListInstance[skillMovementPreferenceIndex].GetMovementPreference();
+            } 
+            else
+            {
+                AIMovementPreference = AISkillMovementPreference.Idle;
+            }
+
+            if (skillReadyIndex != -1)
+            {
+                CurrentSkillIndex = skillReadyIndex;
+                SkillListInstance[skillReadyIndex].DoSkillLogic(this);
+
+                AIMovementPreference = SkillListInstance[skillReadyIndex].GetMovementPreference();
+            }
+        }
+    }
 }

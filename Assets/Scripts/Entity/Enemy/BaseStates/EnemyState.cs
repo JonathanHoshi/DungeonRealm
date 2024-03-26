@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyState : EntityState
+public class EnemyState : EntityActiveState
 {
     protected EnemyController Enemy { get { return (EnemyController)entity; } }
 
@@ -33,4 +33,5 @@ public class EnemyState : EntityState
     {
         base.AnimationTriggerEvent(triggerType);
     }
+
 }

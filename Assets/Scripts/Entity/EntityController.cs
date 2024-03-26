@@ -18,7 +18,6 @@ public abstract class EntityController : MonoBehaviour, IDamagable, IEntityMovab
 
     #endregion
 
- 
     #region Movement Variables
     public Rigidbody RB { get; set; }
     public Animator Animator { get; set; }
@@ -30,17 +29,51 @@ public abstract class EntityController : MonoBehaviour, IDamagable, IEntityMovab
 
     #endregion
 
+    #region Skill Variables
+
+    [field: Header("Skill Variables")]
+    [field: SerializeField] private List<SkillSOBase> SkillList { get; set; }
+    public SkillSOBase[] SkillListInstance { get; set; }
+
+    [field: SerializeField] public int CurrentSkillIndex { get; set; } = -1;
+
+    #endregion
+
+    #region Modifier Variables
+
+    public float movementSpeedSkillModifier = 1f;
+    public bool canMoveModifier = true;
+
+    #endregion
+
+    public AnimatorOverrideController animatorOverrideController;
+
     protected virtual void Awake()
     {
         Animator = GetComponent<Animator>();
         RB = GetComponent<Rigidbody>();
 
         StateMachine = new EntityStateMachine();
+
+        SkillListInstance = new SkillSOBase[SkillList.Count];
+
+        for (int i = 0; i < SkillList.Count; i++)
+        {
+            SkillListInstance[i] = Instantiate(SkillList[i]);
+        }
     }
 
     protected virtual void Start()
     {
         CurrentHealth = MaxHealth;
+
+        animatorOverrideController = new AnimatorOverrideController(Animator.runtimeAnimatorController);
+        Animator.runtimeAnimatorController = animatorOverrideController;
+        
+        for (int i = 0; i < SkillList.Count; i++)
+        {
+            SkillListInstance[i].Initialize();
+        }
     }
 
     protected virtual void Update()
@@ -82,7 +115,9 @@ public abstract class EntityController : MonoBehaviour, IDamagable, IEntityMovab
 
     public virtual void MoveEntity(Vector3 directon, float speed)
     {
-        RB.velocity = directon * speed;
+        RB.velocity = (canMoveModifier)
+            ? movementSpeedSkillModifier * speed * directon
+            : Vector3.zero;
     }
 
     public virtual void RotateEntity(Vector3 direction, float speed)
@@ -115,17 +150,37 @@ public abstract class EntityController : MonoBehaviour, IDamagable, IEntityMovab
 
     public enum AnimationTriggerType 
     { 
+        UseSkill,
+        EndSkill,
         EntityDamaged,
         PlayFootstepSound,
     }
 
     protected void AnimationTriggerEvent(AnimationTriggerType triggerType)
     {
-        StateMachine.CurrentEntityState.AnimationTriggerEvent(triggerType);
+        if (StateMachine.IsInitialized()) 
+        { 
+            StateMachine.CurrentEntityState.AnimationTriggerEvent(triggerType);
+        }
     }
-
 
     #endregion
 
+    public void UseSkillEvent()
+    {
+        if (CurrentSkillIndex != -1)
+        {
+            SkillList[CurrentSkillIndex].UseSkillEvent(this);
+        }
+    }
 
+    public void EndSkillEvent()
+    {
+        if (CurrentSkillIndex != -1)
+        {
+            SkillList[CurrentSkillIndex].EndSkillEvent(this);
+        }
+
+        CurrentSkillIndex = -1;
+    }
 }

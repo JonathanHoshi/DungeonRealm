@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public float intensity = 1;
+    public float trackingIntensity = 1;
 
     private Transform playerRef;
 
@@ -18,6 +18,6 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = Vector3.Lerp(this.transform.position, playerRef.position, intensity);
+        this.transform.position = Vector3.Lerp(this.transform.position, playerRef.position, trackingIntensity);
     }
 }

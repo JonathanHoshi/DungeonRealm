@@ -7,5 +7,6 @@ public class PlayerState : EntityState
 {
     protected PlayerController Player { get { return (PlayerController)entity; } }
 
-    public PlayerState(PlayerController player, EntityStateMachine entityStateMachine) : base(player, entityStateMachine) { }
+    public PlayerState(PlayerController player, EntityStateMachine entityStateMachine) 
+        : base(player, entityStateMachine) { }
 }
