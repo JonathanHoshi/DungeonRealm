@@ -368,7 +368,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: Duration
+  - m_Name: SkillSpeed
     m_Type: 1
     m_DefaultFloat: 1
     m_DefaultInt: 0
@@ -403,7 +403,7 @@ AnimatorStateTransition:
   serializedVersion: 3
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
-  m_ExitTime: 0.625
+  m_ExitTime: 1
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -669,7 +669,7 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: bc6d5773a7417664d8d6333964518da3, type: 2}
   m_Tag: 
-  m_SpeedParameter: Duration
+  m_SpeedParameter: SkillSpeed
   m_MirrorParameter: 
   m_CycleOffsetParameter: MoveSpeed
   m_TimeParameter: 4

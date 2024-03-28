@@ -31,4 +31,9 @@ public class PlayerController : EntityController
     {
         base.FixedUpdate();
     }
+
+    public override Vector3 GetTargetPosition()
+    {
+        return InputManager.instance.MouseWorld;
+    }
 }

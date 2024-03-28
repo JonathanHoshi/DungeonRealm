@@ -211,4 +211,9 @@ public abstract class EnemyController : EntityController
             }
         }
     }
+
+    public override Vector3 GetTargetPosition()
+    {
+        return GameManager.instance.PlayerRef.transform.position;
+    }
 }

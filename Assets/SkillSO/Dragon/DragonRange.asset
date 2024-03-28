@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba0b555242f90fa4aa842011ef8cbd44, type: 3}
+  m_Name: DragonRange
+  m_EditorClassIdentifier: 
+  skillRange: 10
+  isOutside: 0
+  cooldown: 0
+  startOnCooldown: 0
+  msIncreasePercentage: 0
+  cannotMove: 1
+  skillClipOverride:
+    clip: {fileID: 7400000, guid: 9938c3cc0a93e4148bfd07f61d02216d, type: 2}
+    overrideState: 0
+  artIcon: {fileID: 0}
+  soundFX: {fileID: 0}
+  projectilePrefab: {fileID: 1269614272536913015, guid: 3d84dd70d6feab949931db69bc9e69c6,
+    type: 3}
+  projectileMaxRange: 20
+  projectileSpeed: 10

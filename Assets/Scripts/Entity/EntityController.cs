@@ -1,8 +1,34 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+
+[Serializable]
+public class EntitySpawnLocation
+{
+    public enum SpawnPoint
+    {
+        ProjFirePoint,
+        BuffCastPoint,
+    }
+    public Transform projectileFirePoint;
+    public Transform buffCastPoint;
+
+    public Transform GetSpawnPoint(SpawnPoint spawnPoint)
+    {
+        switch (spawnPoint)
+        {
+            case SpawnPoint.ProjFirePoint:
+                return projectileFirePoint;
+            case SpawnPoint.BuffCastPoint:
+                return projectileFirePoint;
+        }
+
+        return null;
+    }
+}
 
 public abstract class EntityController : MonoBehaviour, IDamagable, IEntityMovable
 {
@@ -37,14 +63,20 @@ public abstract class EntityController : MonoBehaviour, IDamagable, IEntityMovab
 
     [field: SerializeField] public int CurrentSkillIndex { get; set; } = -1;
 
+    [SerializeField] public LayerMask targetableMask;
+
     #endregion
 
     #region Modifier Variables
 
+    [Header("Modifier Variables")]
     public float movementSpeedSkillModifier = 1f;
     public bool canMoveModifier = true;
 
     #endregion
+
+    [Header("SpawnPoint Variables")]
+    [SerializeField] protected EntitySpawnLocation spawnLocationList = new EntitySpawnLocation();
 
     public AnimatorOverrideController animatorOverrideController;
 
@@ -166,11 +198,15 @@ public abstract class EntityController : MonoBehaviour, IDamagable, IEntityMovab
 
     #endregion
 
+    public abstract Vector3 GetTargetPosition();
+
     public void UseSkillEvent()
     {
         if (CurrentSkillIndex != -1)
         {
-            SkillList[CurrentSkillIndex].UseSkillEvent(this);
+            EntitySkillInfo entitySkillInfo = new EntitySkillInfo(targetableMask, 1f, GetTargetPosition());
+
+            SkillList[CurrentSkillIndex].UseSkillEvent(this, entitySkillInfo);
         }
     }
 
@@ -182,5 +218,12 @@ public abstract class EntityController : MonoBehaviour, IDamagable, IEntityMovab
         }
 
         CurrentSkillIndex = -1;
+    }
+
+    public Transform GetSpawnTransform(EntitySpawnLocation.SpawnPoint spawnPoint)
+    {
+        Transform result = spawnLocationList.GetSpawnPoint(spawnPoint);
+
+        return (result != null) ? result : transform;
     }
 }

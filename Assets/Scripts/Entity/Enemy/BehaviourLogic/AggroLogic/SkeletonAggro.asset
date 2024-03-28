@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90ccd80cd14a880479b6d45ea06457be, type: 3}
   m_Name: SkeletonAggro
   m_EditorClassIdentifier: 
-  combatAggroRadius: 10
+  ignoreAggroChecks: 0
+  combatAggroRadius: 15
   idleAggroChecksPerSecond: 2
   combatAggroChecksPerSecond: 4
-  aggroChecksIgnoreEnabled: 0
   ignoreObstaclesAggroRange: 0.5
   aggroObstacleMask:
     serializedVersion: 2

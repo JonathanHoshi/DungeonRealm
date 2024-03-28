@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 598f0abf7cc558d4785576c28133582d, type: 3}
+  m_Name: SkeletonMelee
+  m_EditorClassIdentifier: 
+  skillRange: 2
+  isOutside: 0
+  cooldown: 0
+  startOnCooldown: 0
+  msIncreasePercentage: 0
+  cannotMove: 1
+  skillClipOverride:
+    clip: {fileID: 7400000, guid: 3662e43b628c997478f18d4b0b91e85b, type: 2}
+    overrideState: 0
+  artIcon: {fileID: 0}
+  soundFX: {fileID: 0}
+  meleeAngle: 20

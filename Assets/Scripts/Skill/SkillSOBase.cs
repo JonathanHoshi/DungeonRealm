@@ -34,7 +34,7 @@ public abstract class SkillSOBase : ScriptableObject
     public bool startOnCooldown = false;
 
     [Header("Movement Modifiers")]
-    [Range(-5, 5f)] public float movementSpeedIncreasePercentage = 0f;
+    [Range(-5, 5f)] public float msIncreasePercentage = 0f;
     public bool cannotMove = true;
 
     [Header("Skill Animation Variables")]
@@ -65,7 +65,7 @@ public abstract class SkillSOBase : ScriptableObject
             entity.canMoveModifier = !cannotMove;
 
             if (!cannotMove)
-                entity.movementSpeedSkillModifier += movementSpeedIncreasePercentage;
+                entity.movementSpeedSkillModifier += msIncreasePercentage;
         }
     }
 
@@ -105,13 +105,13 @@ public abstract class SkillSOBase : ScriptableObject
             ? isTargetInside
             : !isTargetInside;
     }
-    public abstract void UseSkillEvent(EntityController entity);
+    public abstract void UseSkillEvent(EntityController entity, EntitySkillInfo entitySkillInfo);
 
     public virtual void EndSkillEvent(EntityController entity)
     {
         entity.canMoveModifier = true;
 
         if (!cannotMove)
-            entity.movementSpeedSkillModifier -= movementSpeedIncreasePercentage;
+            entity.movementSpeedSkillModifier -= msIncreasePercentage;
     }
 }
